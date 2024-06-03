@@ -4,10 +4,12 @@ import {
   obterUsuarioPorId,
   deletarUsuario,
   atualizarUsuario,
-  obterUsuarioPorCpf,
+  obterUsuarioPorEmail,
 } from "../repository/usuarioRepository.js";
 
 import { Router } from "express";
+import createToken from '../helpers/create-token.js'
+
 let router = Router();
 
 router.post("/usuario/cadastrar", async (req, resp) => {
@@ -27,8 +29,9 @@ router.post("/usuario/cadastrar", async (req, resp) => {
     senha,
     email,
   });
-
-  return resp.status(201).send(client);
+  const token = await createToken(client,req,resp) 
+  return resp.status(201).json({token: token});
+  
 });
 
 router.get("/usuario/listar", async (req, resp) => {
@@ -93,15 +96,15 @@ router.put("/usuario/:id", async (req, resp) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { cpf, senha } = req.body;
+  const { email, senha } = req.body;
 
-  if (!cpf || !senha) {
+  if (!email || !senha) {
     return res.status(400).send("Email e senha são obrigatórios.");
   }
-
+  
   try {
-    const user = await obterUsuarioPorCpf(email);
-
+    const user = await obterUsuarioPorEmail(email);
+    //console.log("usuario",user)
     if (!user) {
       return res.status(404).send("Usuário não encontrado.");
     }
@@ -109,8 +112,9 @@ router.post("/login", async (req, res) => {
     if (user.senha !== senha) {
       return res.status(401).send("Senha incorreta.");
     }
-
-    return res.status(200).send("Usuário logado com sucesso.");
+    //console.log("ate aqui veio")
+    const token = await createToken(user,req,res)
+    return res.status(200).json({'token':token});
   } catch (error) {
     return res.status(500).send("Erro no servidor");
   }
