@@ -6,7 +6,6 @@ export async function criarOrcamento(orcamento) {
     marca,
     moto,
     ano,
-    dataEntrada,
     dataRetiradaPrevisao,
     valor,
     desconto,
@@ -16,8 +15,8 @@ export async function criarOrcamento(orcamento) {
   } = orcamento;
 
   const comando = `
-    INSERT INTO orcamentos (servico, marca, moto, ano, dataEntrada, dataRetiradaPrevisao, valor, desconto, valorFinal, tipoPagamento, clienteId) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO orcamentos (servico, marca, moto, ano, dataRetiradaPrevisao, valor, desconto, valorFinal, tipoPagamento, clienteId) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const resp = await con.query(comando, [
@@ -25,7 +24,6 @@ export async function criarOrcamento(orcamento) {
     marca,
     moto,
     ano,
-    dataEntrada,
     dataRetiradaPrevisao,
     valor,
     desconto,
