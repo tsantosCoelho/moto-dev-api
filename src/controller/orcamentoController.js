@@ -14,7 +14,6 @@ router.post("/orcamento/cadastrar", async (req, resp) => {
     marca,
     moto,
     ano,
-    dataEntrada,
     dataRetiradaPrevisao,
     valor,
     desconto,
@@ -28,7 +27,6 @@ router.post("/orcamento/cadastrar", async (req, resp) => {
     !marca ||
     !moto ||
     !ano ||
-    !dataEntrada ||
     !dataRetiradaPrevisao ||
     !valor ||
     !tipoPagamento ||
@@ -46,7 +44,6 @@ router.post("/orcamento/cadastrar", async (req, resp) => {
     marca,
     moto,
     ano,
-    dataEntrada,
     dataRetiradaPrevisao,
     valor,
     desconto,
@@ -58,8 +55,8 @@ router.post("/orcamento/cadastrar", async (req, resp) => {
   return resp.status(201).send(budget);
 });
 
-router.get("/orcamento/listar/:clientId", async (req, resp) => {
-  let clientId = req.params.clientId;
+router.get("/orcamento/listar/:id", async (req, resp) => {
+  let clientId = req.params.id;
   let budgets = await listarOrcamentosPorClienteId(clientId);
   return resp.status(200).send(budgets);
 });

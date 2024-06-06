@@ -45,12 +45,13 @@ export async function atualizarCliente(clienteId, dadosClienteAtualizados) {
 
   let resp = await con.query(comando, [
     nome,
-    cpf,
     endereco,
+    cpf,
     telefone,
     email,
     clienteId,
   ]);
+
   return resp[0].affectedRows > 0;
 }
 

@@ -63,12 +63,12 @@ export async function obterUsuarioPorId(usuarioId) {
   return resposta[0][0];
 }
 
-export async function obterUsuarioPorCpf(cpf) {
+export async function obterUsuarioPorEmail(email) {
   const comando = `
     SELECT * FROM usuarios
-    WHERE cpf = ?
+    WHERE email = ?
   `;
 
-  const resposta = await con.query(comando, [cpf]);
+  const resposta = await con.query(comando, [email]);
   return resposta[0][0];
 }

@@ -60,13 +60,13 @@ router.delete("/cliente/:id", async (req, resp) => {
       .send("Solicitação inválida. Verifique o id, e tente novamente");
   }
 
-  return resp.status(200);
+  return resp.status(200).send("sucesso");
 });
 
 router.put("/cliente/:id", async (req, resp) => {
   let idClient = req.params.id;
   let dataClient = req.body;
-
+  
   if (
     !dataClient.nome ||
     !dataClient.endereco ||
@@ -81,7 +81,7 @@ router.put("/cliente/:id", async (req, resp) => {
       );
   }
 
-  let updateStatus = await atualizarCliente(dataClient, idClient);
+  let updateStatus = await atualizarCliente(idClient,dataClient);
 
   if (!updateStatus) {
     return resp
@@ -89,7 +89,7 @@ router.put("/cliente/:id", async (req, resp) => {
       .send("Solicitação inválida. Verifique o id, e tente novamente");
   }
 
-  return resp.status(200);
+  return resp.status(200).send("cliente atualizado com sucesso");
 });
 
 export default router;
